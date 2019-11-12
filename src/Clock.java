@@ -1,16 +1,42 @@
-public class Clock {
-    private Counter hours;
-    private Counter minutes;
-    private Counter seconds;
+public class Clock{
+    private NumberDisplay hours;
+    private NumberDisplay minutes;
+    private String displayString;
 
-    public Clock {
-    int Hours;
-    int Minutes;
-    int Seconds;
+    public Clock () {
+        this.hours = new NumberDisplay(24);
+        this.minutes = new NumberDisplay(60);
+        updateDisplay();
+    }
 
+    public Clock(int hours, int minutes) {
+        this();
+        this.hours.setValue(0);
+        this.minutes.setValue(0);
+    }
+    public void timeTick () {
+        minutes.increment();
+    }
 
-        this.hours = new Counter(24, Hours);
-        this.minutes = new Counter(60, Minutes);
-        this.seconds = new Counter(60, Seconds);
+    public void setTime(int hours, int minutes) {
+        this.hours.setValue(hours);
+        this.minutes.setValue(minutes);
+    }
+    public String getTime() {
+        return displayString;
+    }
+    private void updateDisplay() {
+        displayString = hours.getDisplayValue() + ":" + minutes.getDisplayValue();
+    }
+
+    public static void main(String[] args) {
+        Clock c1 = new Clock();
+        for(int i = 0; i< 200000; i++) {
+            try {
+                Thread.sleep(60000);
+            } catch(InterruptedException ie) {}
+            System.out.println(c1.getTime());
+        }
+
     }
 }
